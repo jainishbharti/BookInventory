@@ -73,9 +73,9 @@ public class EmployeeServiceImplementation implements EmployeeRepository{
         CriteriaBuilder cb  = entityManager.getCriteriaBuilder();
         CriteriaQuery<Sales> query = cb.createQuery(Sales.class);
         Root<Sales> salesTable = query.from(Sales.class);
-        Join<Object, Object> salesAndBook = salesTable.join("bookName");
+        Join<Object, Object> salesAndBook = salesTable.join("book");
         query.select(salesAndBook.get("bookName"))
-                .where(cb.like(salesTable.get("genre"),"Software Architecture"))
+                .where(cb.like(salesAndBook.get("genre"),"Software Architecture"))
                 .groupBy(salesAndBook.get("bookId"))
                 .orderBy(cb.desc(cb.count(query.from(Sales.class))));
 
