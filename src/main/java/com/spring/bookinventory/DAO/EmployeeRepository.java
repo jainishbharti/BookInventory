@@ -11,6 +11,7 @@ public interface EmployeeRepository {
      Employee findById(Integer id);
      @Transactional
      Employee save(Employee newEmployee);
+     @Transactional
      String deleteById(Integer id);
      Employee findByEmail(String email);
 
