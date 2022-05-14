@@ -1,17 +1,15 @@
 package com.spring.bookinventory.entity;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Employee {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer employeeId;
     private String employeeName;
     private String designation;
-    @Column(name="email", unique = true)
     private String email;
     private Double salary;
 

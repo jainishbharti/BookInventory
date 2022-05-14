@@ -4,9 +4,12 @@ import com.spring.bookinventory.entity.Employee;
 import com.spring.bookinventory.entity.Sales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
+
+
 import java.util.List;
 
 @Repository

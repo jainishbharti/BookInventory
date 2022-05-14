@@ -6,25 +6,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class EmployeeController {
 
     @Autowired
     EmployeeRepository employeeRepository;
 
     @GetMapping("/")
-    public String home(ModelAndView mv){
+    public String home(){
+        ModelAndView mv = new ModelAndView();
         mv.addObject("employees", employeeRepository.findAll());
-        return "home";
+        mv.setViewName("home.html");
+        return "Server running at port 8080. Can be viewed at http://localhost:8080";
     }
 
-    @PostMapping("/addEmployee")
-    public String saveEmployee(Employee employee){
-        employeeRepository.save(employee);
-        return "redirect:/";
+    @GetMapping("/getAllEmployees")
+    public List<Employee> getEmployees(){
+        return employeeRepository.findAll();
+    }
+
+    @PostMapping(path ="/addEmployee", consumes="application/json")
+    public Employee saveEmployee(Employee employee){
+        return employeeRepository.save(employee);
     }
 
     @GetMapping("/addEmployeeForm")
