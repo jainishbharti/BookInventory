@@ -10,11 +10,15 @@ import java.util.List;
 @RestController
 public class EmployeeController {
 
-    @Autowired
+
     EmployeeRepository employeeRepository;
 
+    @Autowired
+    public EmployeeController(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
-//    @GetMapping("/")
+    //    @GetMapping("/")
 //    public ModelAndView home(){
 //        ModelAndView mv = new ModelAndView("home");
 //        mv.addObject("employees", employeeRepository.findAll());

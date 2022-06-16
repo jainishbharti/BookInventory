@@ -4,7 +4,6 @@ import com.spring.bookinventory.entity.Employee;
 import com.spring.bookinventory.entity.Sales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
@@ -42,23 +41,6 @@ public class EmployeeServiceImplementation implements EmployeeRepository{
     }
 
     @Override
-    public Employee save(Employee newEmployee) {
-        entityManager.persist(newEmployee);
-        return newEmployee;
-    }
-
-    @Override
-    public String deleteById(Integer id) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaDelete<Employee> delete = cb.createCriteriaDelete(Employee.class);
-        Root<Employee> employee = delete.from(Employee.class);
-        delete.where(cb.equal(employee.get("employeeId"), id));
-        entityManager.createQuery(delete).executeUpdate();
-
-        return "{\"message\" : \"Entity deleted successfully\"}";
-    }
-
-    @Override
     public Employee findByEmail(String email) {
         CriteriaBuilder cb  = entityManager.getCriteriaBuilder();
         CriteriaQuery<Employee> query = cb.createQuery(Employee.class);
@@ -67,6 +49,33 @@ public class EmployeeServiceImplementation implements EmployeeRepository{
 
         return entityManager.createQuery(query).getSingleResult();
     }
+
+    @Override
+    public Employee save(Employee newEmployee) {
+        entityManager.persist(newEmployee);
+        return newEmployee;
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaDelete<Employee> delete = cb.createCriteriaDelete(Employee.class);
+        Root<Employee> employee = delete.from(Employee.class);
+        delete.where(cb.equal(employee.get("employeeId"), id));
+        entityManager.createQuery(delete).executeUpdate();
+    }
+
+    @Override
+    public void deleteAll() {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaDelete<Employee> delete = cb.createCriteriaDelete(Employee.class);
+        Root<Employee> employee = delete.from(Employee.class);
+        delete.where();
+        entityManager.createQuery(delete).executeUpdate();
+
+    }
+
+
 
     @Override
     public List<Sales> findMostBoughtBook() {

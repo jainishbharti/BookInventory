@@ -12,7 +12,9 @@ public interface EmployeeRepository {
      @Transactional
      Employee save(Employee newEmployee);
      @Transactional
-     String deleteById(Integer id);
+     void deleteById(Integer id);
+
+     void deleteAll();
      Employee findByEmail(String email);
 
      List<Sales> findMostBoughtBook();
